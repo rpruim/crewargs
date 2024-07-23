@@ -1,0 +1,83 @@
+---
+title: "Using crewargs"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using crewargs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Example: Workers with modified `max-connections`
+
+Suppose you want to create a {targets} "makefile" with workers that have access to
+an increased number of connections.  R accepts a command line argument `--max-connections=321`, but how do we get that passed to the workers?
+
+
+```{r, eval=FALSE}
+# save this to _targets_example.R
+library(targets)
+library(crewargs)
+
+tar_option_set(
+  packages = c("crewargs"), 
+  controller = 
+    crewargs_controller_local_args(
+      workers = 2, seconds_idle = 60, 
+      cmdargs = "--max-connections=321"
+    )
+)
+
+list(
+  tar_target(
+    name = connections, command = parallelly::availableConnections()
+  )
+)
+```
+
+```{r, include=FALSE}
+cat(file = "_targets_example.R",
+'
+library(targets)
+library(crewargs)
+
+tar_option_set(
+  packages = c("crewargs"), 
+  controller = 
+    crewargs_controller_local_args(
+      workers = 2, seconds_idle = 60, 
+      cmdargs = "--max-connections=321"
+    )
+)
+
+list(
+  tar_target(
+    name = connections, command = parallelly::availableConnections()
+  )
+)
+'
+)
+```
+
+```{r, results = 'hide'}
+tar_make(
+  script = "_targets_example.R",
+  callr_arguments = list(
+    'cmdargs' = c("--save", "--no-save", "--no-restore", "--max-connections=400")
+  )
+)
+```
+
+The number of connections available to workers (321) is determined by `cmdargs` 
+passed to the controller, not by `cmdargs` passed to `callr::r()`.
+
+```{r}
+tar_read(connections)
+```
