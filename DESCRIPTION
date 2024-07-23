@@ -1,0 +1,13 @@
+Package: crewargs
+Type: Package
+Title: Crew Launcher with R Session Arguments
+Version: 0.1.0
+Author: Randall Pruim
+Maintainer: Randall Pruim <rpruim@gmail.com>
+Description: Provides a launcher that passes R session arguments to workers.
+License: MIT + file LICENSE
+Depends: crew
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE, r6 = TRUE)
+RoxygenNote: 7.3.2
