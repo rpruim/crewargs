@@ -67,6 +67,8 @@ list(
 ```
 
 ```{r, results = 'hide'}
+library(targets)
+library(crewargs)
 tar_make(
   script = "_targets_example.R",
   callr_arguments = list(

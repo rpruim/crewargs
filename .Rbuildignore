@@ -3,4 +3,6 @@
 ^README\.Rmd$
 ^LICENSE\.md$
 ^_targets$
+^vignettes_targets$
 ^_targets_example.R$
+^vignettes/_targets_example.R$
