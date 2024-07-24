@@ -6,6 +6,13 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
+### Important note
+
+This behavior is being incorporated into {crew}. See
+<https://github.com/wlandau/crew/issues/175#issuecomment-2248723378>.
+
+## Description
+
 {crewargs} provides an extention to `crew::crew_class_launcher_local`
 and its associated controller `crew::crew_launcher_local_args()` to
 allow passing command line arguments to the R sessions that the workers
